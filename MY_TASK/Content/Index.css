@@ -1,0 +1,145 @@
+﻿.container {
+    width: 100%;
+    max-width: 100%;
+    padding: 0px;
+    margin: 0px;
+}
+
+#navbar {
+    margin-bottom: 20px;
+}
+
+body {
+    background: #e9eaed; /* Old browsers */
+    height: 100vh;
+    overflow: hidden;
+}
+
+#remote, #alltask, #mytask {
+    height: 100%;
+    padding-top: 10px;
+}
+
+    #remote > div > div {
+        float: left;
+    }
+
+    #remote input[type="checkbox"],
+    #remote input[type="radio"],
+    #mytask input[type="radio"] {
+        position: relative;
+        top: 2px;
+    }
+
+.label-cursor label {
+    cursor: pointer;
+}
+
+.border-all {
+    border: 1px solid;
+    border-color: #e5e6e9 #dfe0e4 #d0d1d5;
+    /*-moz-box-shadow: 0 0 1px 1px #888;
+            -webkit-box-shadow: 0 0 1px 1px#888;*/
+    /*box-shadow: 0 0 1px 1px #888;*/
+    background: #fff;
+    -webkit-border-radius: 5px;
+    padding: 10px;
+}
+
+.height-92 {
+    height: 90%;
+}
+
+.scroll {
+    overflow: auto;
+    overflow-x: hidden;
+    /*overflow-y: scroll;*/
+}
+
+.task {
+    background-color: #ffffaa;
+    /* background-image: -moz-linear-gradient(top, #ffffcc, #ffff66); */
+    background-image: -moz-linear-gradient(top, #ffffcc, yellow);
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#ffffcc), to(yellow));
+    cursor: pointer;
+    float: left;
+    min-height: 250px;
+}
+
+    .task:hover {
+        border: 1px solid orange;
+        -webkit-box-shadow: 0 0 10px #FF4733;
+        /*-webkit-box-shadow: 1px 1px 1px 1px #FF4733;
+                box-shadow: 1px 1px 1px 1px #FF4733;*/
+    }
+
+    .task label {
+        cursor: pointer;
+    }
+
+.text-bold {
+    font-weight: bold;
+}
+
+.task-content {
+    height: 80px;
+}
+
+.task-detail {
+    height: 80px;
+}
+
+.task-other-reward {
+    height: 50px;
+}
+
+.task-list {
+    height: 76vh;
+}
+
+.task-item {
+    border: 1px solid;
+    border-color: #e5e6e9 #dfe0e4 #d0d1d5;
+    height: 50px;
+    background-color: lemonchiffon;
+}
+.task-item:hover {
+        -webkit-box-shadow: 0 0 10px #800000;
+        /*-webkit-box-shadow: 1px 1px 1px 1px #FF4733;
+                box-shadow: 1px 1px 1px 1px #FF4733;*/
+    }
+
+    .task-item:hover {
+        cursor: pointer;
+    }
+
+.task-item-icon {
+    height: 100%;
+    font-size: 2em;
+}
+
+    .task-item-icon .glyphicon {
+        margin-top: 10px;
+    }
+
+.log-out {
+    color: #3399FF !important;
+    cursor: pointer;
+}
+
+.modal-dialog-height,
+.modal-content-height {
+    height: 90%;
+}
+
+.modal-body-height {
+    height: 50%;
+    overflow-y: scroll;
+}
+
+.modal-detail {
+    border-top: 1px solid #e5e5e5;
+    float: left;
+    position: relative;
+    padding: 20px;
+}

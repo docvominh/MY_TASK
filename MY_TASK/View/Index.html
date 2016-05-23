@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Index</title>
+    <!-- Common -->
+    <link href="../Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../Content/Site.css" rel="stylesheet" />
+
+    <script src="../Scripts/Base/jquery-1.10.2.min.js"></script>
+    <script src="../Scripts/Base/bootstrap.min.js"></script>
+    <script src="../Scripts/Base/angular.min.js"></script>
+    <script src="../Scripts/Base/angular-route.min.js"></script>
+
+    <!-- Current page -->
+    <link href="../Content/Index.css" rel="stylesheet" />
+    <script src="../Scripts/Controller/indexController.js"></script>
+    <script src="../Scripts/Services/indexServices.js"></script>
+    <script src="../Scripts/RouteProvider.js"></script>
+    
+
+    <script src="../Scripts/Controller/userController.js"></script>
+    <script src="../Scripts/Services/userServices.js"></script>
+
+    <script src="../Scripts/Controller/managerController.js"></script>
+    <script src="../Scripts/Services/managerServices.js"></script>
+</head>
+<body ng-app="mainApp" ng-controller="indexController as ctrl">
+
+    <section id="navbar">
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand margin-left-10">Task System</a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="#index">Home</a></li>
+                        <li><a href="#task-manager">Task Manager</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav float-right">
+                        <li><a>{{ctrl.helloMessage}}</a></li>
+                        <li><a class="log-out" ng-click="logOut()">Log Out</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="body-content" ng-view></section>
+</body>
+</html>

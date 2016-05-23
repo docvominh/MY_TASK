@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Login Page</title>
+    <!-- Common -->
+    <link href="../Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="../Content/Site.css" rel="stylesheet" />
+
+    <script src="../Scripts/Base/jquery-1.10.2.min.js"></script>
+    <script src="../Scripts/Base/bootstrap.min.js"></script>
+    <script src="../Scripts/Base/angular.min.js"></script>
+    <script src="../Scripts/Base/angular-route.min.js"></script>
+
+    <!--Current page-->
+    <script src="../Scripts/Controller/loginController.js"></script>
+    <script src="../Scripts/Services/loginServices.js"></script>
+    <link href="../Content/Login.css" rel="stylesheet" />
+</head>
+<body ng-app="mainApp" ng-controller="loginController as ctrl">
+    <div class="container body-content">
+        <div class="container">
+            <form class="form-signin">
+                <h2 class="form-signin-heading">{{ctrl.title}}</h2>
+                <label for="userId" class="sr-only">UserName</label>
+                <input type="text"
+                       id="userName"
+                       class="form-control"
+                       placeholder="User Id"
+                       required autofocus
+                       ng-model="user.UserId">
+                <label for="userPassword" class="sr-only">Password</label>
+
+                <input type="password"
+                       id="userPassword"
+                       class="form-control"
+                       placeholder="Password"
+                       required
+                       ng-model="user.password">
+
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox"
+                               id="rememberMe"
+                               value="remember-me"
+                               ng-model="user.remember"> Remember me
+                    </label>
+                </div>
+                <button class="btn btn-lg btn-primary btn-block" ng-click="submit()">Log in</button>
+            </form>
+        </div> <!-- /container -->
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">{{modelTitle}}</h4>
+                </div>
+                <div class="modal-body">
+                    {{modelContent}}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="myLoading" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="loading-dialog">
+            <div class="modal-content">
+                <img src="../Content/image/loading_spinner.gif" />
+            </div>
+        </div>
+    </div>
+</body>
+</html>

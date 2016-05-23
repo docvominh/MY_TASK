@@ -1,0 +1,374 @@
+﻿<div class="container body-content" ng-controller="userController">
+    <div class="container full-height">
+        <div id="remote" class="col-md-2">
+            <div class="col-md-12 no-padding float-left border-all height-92">
+                <div class="col-md-12 no-padding">
+                    <div class="col-md-12 no-padding">
+                        <label>DATE</label>
+                    </div>
+                    <div class="col-md-12 no-padding ">
+                        <input type="date"
+                               class="form-control"
+                               ng-model="condition.TaskDate"
+                               ng-change="searchTask()">
+                    </div>
+                </div>
+                <div class="col-md-12 no-padding margin-top-10">
+                    <div class="col-md-12 no-padding">
+                        <label>SORTING</label>
+                    </div>
+                    <div class="col-md-12 no-padding ">
+                        <select class="form-control" ng-model="condition.SortItem" ng-change="searchTask()">
+                            <option value=""></option>
+                            <option value="1">Reward</option>
+                            <option value="2">Estimation</option>
+                            <option value="3">Task level</option>
+                        </select>
+                    </div>
+                    <div class="col-md-12 no-padding margin-top-10">
+                        <div class="col-md-6 no-padding label-cursor">
+                            <input id="sort-asc"
+                                   type="radio"
+                                   name="sortType"
+                                   ng-model="condition.SortDirection"
+                                   checked="checked"
+                                   value="0"
+                                   disabled
+                                   ng-change="searchTask()"
+                                   ng-disabled="checkDisable(condition.SortItem)" />
+                            <label for="sort-asc">Ascending</label>
+                        </div>
+                        <div class="col-md-6 no-padding label-cursor">
+                            <input id="sort-desc"
+                                   type="radio"
+                                   name="sortType"
+                                   ng-model="condition.SortDirection"
+                                   value="1"
+                                   disabled
+                                   ng-change="searchTask()"
+                                   ng-disabled="checkDisable(condition.SortItem)" />
+                            <label for="sort-desc">Descending</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 no-padding margin-top-10">
+                    <div class="col-md-12 no-padding">
+                        <label>TASK TYPE</label>
+                    </div>
+
+                    <div class="col-md-12 no-padding">
+                        <div class="col-md-6 no-padding label-cursor">
+                            <label><input type="checkbox" ng-model="condition.Easy" ng-change="searchTask()" />Easy</label>
+                        </div>
+                        <div class="col-md-6 no-padding label-cursor">
+                            <label><input type="checkbox" ng-model="condition.Normal" ng-change="searchTask()" />Normal</label>
+                        </div>
+                        <div class="col-md-6 no-padding label-cursor">
+                            <label><input type="checkbox" ng-model="condition.Hard" ng-change="searchTask()" />Hard</label>
+                        </div>
+                        <div class="col-md-6 no-padding label-cursor">
+                            <label><input type="checkbox" ng-model="condition.HardAsHell" ng-change="searchTask()" />Hard as hell !</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 no-padding margin-top-10">
+
+                    <div class="col-md-12 no-padding">
+                        <label>TASK STATUS</label>
+                    </div>
+
+                    <div class="col-md-12 no-padding">
+                        <div class="col-md-6 no-padding label-cursor">
+                            <label><input type="checkbox" ng-model="condition.Free" ng-change="searchTask()" />Free</label>
+                        </div>
+                        <div class="col-md-6 no-padding label-cursor">
+                            <label><input type="checkbox" ng-model="condition.Assigned" ng-change="searchTask()" />Assigned</label>
+                        </div>
+                        <div class="col-md-6 no-padding label-cursor">
+                            <label><input type="checkbox" ng-model="condition.Return" ng-change="searchTask()" />Return</label>
+                        </div>
+                        <div class="col-md-6 no-padding label-cursor">
+                            <label><input type="checkbox" ng-model="condition.Resolved" ng-change="searchTask()" />Resolved</label>
+                        </div>
+                        <div class="col-md-6 no-padding label-cursor">
+                            <label><input type="checkbox" ng-model="condition.Reopen" ng-change="searchTask()" />Reopen</label>
+                        </div>
+                        <div class="col-md-6 no-padding label-cursor">
+                            <label><input type="checkbox" ng-model="condition.Done" ng-change="searchTask()" />Done</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="alltask" class="col-md-7 no-padding">
+            <div class="col-md-12 no-padding float-left border-all height-92 scroll">
+                <div class="col-md-12 no-padding float-left ">
+                    <div class="col-md-4 margin-bottom-10" ng-repeat="item in data.ListAllTaskToday">
+                        <div class="col-md-12 task no-padding border-all" ng-click="showTask(item)">
+                            <div class="col-md-12 no-padding border-bottom">
+                                <label class="text-bold truncate-one-line">(LV:{{item.TaskLevel}})&nbsp;{{item.TaskName}}</label>
+                            </div>
+                            <div class="col-md-12 truncate no-padding task-content ">
+                                {{item.TaskContent}}
+                            </div>
+                            <div class="col-md-12  no-padding task-detail ">
+                                <div class="col-md-6  no-padding ">
+                                    <label class="text-bold">Reward :</label>&nbsp;{{item.TaskReworkMoney}}$
+                                </div>
+                                <div class="col-md-6  no-padding ">
+                                    <label class="text-bold">Time :</label>&nbsp;{{item.TimeToFinish}}&nbsp;hour
+                                </div>
+                                <div class="col-md-12 task-other-reward no-padding truncate" ng-show="item.ShowOtherReward">
+                                    <label class="text-bold">Other Reward :</label>&nbsp;{{item.TaskRewordOther}}
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 float-left no-padding text-left">
+
+                                <div class="col-md-4 float-left no-padding text-left">
+                                    <label class="text-blue">{{item.CreateDate| date:'yyyy-MM-dd'}}</label>
+                                </div>
+
+                                <div class="col-md-8 float-left no-padding text-right">
+                                    <label ng-show="item.ShowOwnUser">{{item.OwnUserName}} got it !</label>
+                                    <label ng-show="item.ShowOwnUserResolve">{{item.OwnUserName}} <label class="text-orange">resolve</label> it !</label>
+                                    <label ng-show="item.ShowOwnUserDone">{{item.OwnUserName}} <label class="text-blue">done</label> it !</label>
+                                    <button type="button"
+                                            class="btn btn-success"
+                                            ng-show="item.ShowGetButton"
+                                            ng-click="userGetTask(item.TaskID,$event,true)">
+                                        Get this
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="mytask" class="col-md-3 ">
+            <div class="col-md-12 no-padding float-left border-all height-92 ">
+                <div class="col-md-12 no-padding">
+                    <div class="col-md-12 no-padding float-left">
+                        <div class="col-md-12 no-padding">
+                            <label>SORTING BY</label>
+                        </div>
+                        <div class="col-md-12 no-padding margin-top-10 label-cursor">
+                            <div class="col-md-4 no-padding">
+                                <input id="date" name="sortItem" class="" type="radio" checked />
+                                <label for="date">Date</label>
+                            </div>
+                            <div class="col-md-4 no-padding">
+                                <input id="deadline" name="sortItem" class="" type="radio" />
+                                <label for="deadline">Deadline</label>
+                            </div>
+                            <div class="col-md-4 no-padding">
+                                <input id="level" name="sortItem" class="" type="radio" />
+                                <label for="level">Level</label>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="col-md-12 no-padding scroll task-list">
+
+                        <div class="col-md-12 task-item no-padding margin-top-10 float-left label-cursor" ng-repeat="item in data.ListTask">
+                            <div class="col-md-2 task-item-icon no-padding text-center">
+                                <span class="glyphicon glyphicon-pushpin"></span>
+                            </div>
+                            <div class="col-md-10 no-padding " ng-click="showMyTask(item)">
+                                <div class="col-md-12"><label class="text-bold truncate-one-line">(LV:{{item.TaskLevel}})&nbsp;{{item.TaskName}}</label></div>
+
+                                <div class="col-md-12">
+
+                                    <div class="col-md-8 no-padding">
+                                        <label>{{item.CreateDate| date:'yyyy-MM-dd'}}&nbsp;({{item.TimeToFinish}}&nbsp;hour)</label>
+                                    </div>
+                                    <div class="col-md-4 no-padding">
+                                        <label>{{item.TaskStatusName}}</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- end task -->
+                    </div><!-- end task list -->
+                </div>
+            </div>
+        </div>
+    </div>  <!-- container -->
+    <!-- Task detail popup -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-height">
+            <div class="modal-content modal-content-height">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">(LV:{{item.TaskLevel}})&nbsp;{{item.TaskName}}</h4>
+                </div>
+                <div class="modal-body modal-body-height">
+                    <div class="col-md-12 no-padding">
+                        {{item.TaskContent}}
+                    </div>
+                </div>
+                <div class="modal-detail">
+                    <div class="col-md-12 no-padding margin-top-10">
+                        <div class="col-md-12 no-padding float-left">
+                            <div class="col-md-3 no-padding">
+                                <label class="text-bold">Task Reward :</label>
+                            </div>
+                            <div class="col-md-9 no-padding">
+                                {{item.TaskReworkMoney}}
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 no-padding float-left">
+                            <div class="col-md-3 no-padding">
+                                <label class="text-bold">Other Reward :</label>
+                            </div>
+                            <div class="col-md-9 no-padding">
+                                {{item.TaskRewordOther}}
+                            </div>
+                        </div>
+                        <div class="col-md-12 no-padding float-left">
+                            <div class="col-md-3 no-padding">
+                                <label class="text-bold"> Task Status :</label>
+                            </div>
+                            <div class="col-md-9 no-padding">
+                                {{item.TaskStatusName}}
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 no-padding float-left">
+                            <div class="col-md-3 no-padding">
+                                <label class="text-bold">Create By :</label>
+                            </div>
+                            <div class="col-md-3 no-padding">
+                                {{item.CreateUserName}}
+                            </div>
+                            <div class="col-md-3 no-padding">
+                                <label class="text-bold">Time to do :</label>
+                            </div>
+                            <div class="col-md-3 no-padding">
+                                {{item.TimeToFinish}}&nbsp;hour
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer float-left col-md-12">
+                    <label ng-show="item.ShowOwnUser">This had gotten by {{item.OwnUserName}}</label>
+                    <button type="button"
+                            class="btn btn-success"
+                            data-dismiss="modal"
+                            ng-show="item.ShowGetButton"
+                            ng-click="userGetTask(item.TaskID,$event,false)">
+                        Get this
+                    </button>
+                    <button type="button"
+                            class="btn btn-default"
+                            data-dismiss="modal">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- My task popup -->
+    <div class="modal fade" id="myTask" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-height">
+            <div class="modal-content modal-content-height">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">(LV:{{item.TaskLevel}})&nbsp;{{item.TaskName}}</h4>
+                </div>
+                <div class="modal-body modal-body-height">
+                    <div class="col-md-12 no-padding">
+                        {{item.TaskContent}}
+                    </div>
+                </div>
+                <div class="modal-detail">
+                    <div class="col-md-12 no-padding margin-top-10">
+                        <div class="col-md-12 no-padding float-left">
+                            <div class="col-md-3 no-padding">
+                                <label class="text-bold">Task Reward :</label>
+                            </div>
+                            <div class="col-md-9 no-padding">
+                                {{item.TaskReworkMoney}}
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 no-padding float-left">
+                            <div class="col-md-3 no-padding">
+                                <label class="text-bold">Other Reward :</label>
+                            </div>
+                            <div class="col-md-9 no-padding">
+                                {{item.TaskRewordOther}}
+                            </div>
+                        </div>
+                        <div class="col-md-12 no-padding float-left">
+                            <div class="col-md-3 no-padding">
+                                <label class="text-bold"> Task Status :</label>
+                            </div>
+                            <div class="col-md-9 no-padding">
+                                {{item.TaskStatusName}}
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 no-padding float-left">
+                            <div class="col-md-3 no-padding">
+                                <label class="text-bold">Create By :</label>
+                            </div>
+                            <div class="col-md-3 no-padding">
+                                {{item.CreateUserName}}
+                            </div>
+                            <div class="col-md-3 no-padding">
+                                <label class="text-bold">Time to do :</label>
+                            </div>
+                            <div class="col-md-3 no-padding">
+                                {{item.TimeToFinish}}&nbsp;hour
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer float-left col-md-12">
+                    <button type="button"
+                            class="btn btn-danger"
+                            data-dismiss="modal"
+                            ng-click="userReturnTask(item.TaskID,$event)">
+                        Return it
+                    </button>
+                    <button type="button"
+                            class="btn btn-primary"
+                            data-dismiss="modal"
+                            ng-click="UserResolveTask(item.TaskID,$event)">
+                        Done it
+                    </button>
+                    <button type="button"
+                            class="btn btn-default"
+                            data-dismiss="modal">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Alert popup -->
+    <div class="modal fade" id="myAlert" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">{{alertTitle}}</h4>
+                </div>
+                <div class="modal-body">
+                    {{alertContent}}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>  <!-- controller -->

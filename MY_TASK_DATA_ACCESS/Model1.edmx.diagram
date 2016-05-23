@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="48203183e63b4c02bc952e2ed5a147d1" Name="Diagram1">
+        <EntityTypeShape EntityType="DB_SMART_DEVModel.sysdiagram" Width="1.5" PointX="0.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_SMART_DEVModel.T_TASK" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_SMART_DEVModel.T_USER" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_SMART_DEVModel.T_USER_TASK" Width="1.5" PointX="5.25" PointY="1.5" IsExpanded="true" />
+        <AssociationConnector Association="DB_SMART_DEVModel.FK_T_TASK_T_USER" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_SMART_DEVModel.FK_T_USER_TASK_T_TASK" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_SMART_DEVModel.FK_T_USER_TASK_T_USER" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

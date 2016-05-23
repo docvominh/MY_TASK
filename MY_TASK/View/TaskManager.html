@@ -1,0 +1,162 @@
+﻿<link href="../Content/TaskManager.css" rel="stylesheet" />
+<div class="container body-content" ng-controller="managerController">
+    <div class="container full-height">
+        <div id="remote" class="col-md-12">
+            <div class="col-md-12 no-padding float-left border-all height-92">
+                <div class="col-md-12 no-padding">
+                    <button class="btn btn-default" ng-click="showTaskCreatePopup()">New Task</button>
+                </div>
+                <div class="col-md-12 no-padding margin-top-10">
+                    <table>
+                        <thead>
+                            <tr>
+                                <td>#</td>
+                                <td>Date</td>
+                                <td>TaskName</td>
+                                <td>Level</td>
+                                <td>TaskStatusName</td>
+                                <td>OwnUserName</td>
+                                <td>#</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in data">
+                                <td>{{ $index+1 }}</td>
+                                <td>{{ item.CreateDate|date:'yyyy-MM-dd' }}</td>
+                                <td>{{ item.TaskName }}</td>
+                                <td>{{ item.TaskLevel }}</td>
+                                <td>{{ item.TaskStatusName }}</td>
+                                <td>{{ item.OwnUserName }}</td>
+                                <td class="list-button">
+                                    <div class="col-md-12 no-padding">
+                                        <div class="col-md-4 no-padding">
+                                            <button class="btn btn-primary">Free</button>
+                                        </div>
+                                        <div class="col-md-4 no-padding">
+                                            <button class="btn btn-success">Done</button>
+                                        </div>
+                                        <div class="col-md-4 no-padding">
+                                            <button class="btn btn-danger">Reopen</button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Task Create popup -->
+    <div class="modal fade" id="taskCreate" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-height modal-dialog-width">
+            <div class="modal-content modal-content-height">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Create new task (No validate)</h4>
+                </div>
+
+                <div class="modal-body">
+                    <div class="col-md-12 no-padding float-left">
+                        <div class="col-md-3">
+                            <label class="text-bold">Task name :</label>
+                        </div>
+                        <div class="col-md-5">
+                            <input type="text" placeholder="required" name="TaskName" class="form-control" ng-model="item.TaskName" />
+                        </div>
+                        <div class="col-md-4">
+                            <span>{{taskNameMessage}}</span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 no-padding float-left margin-top-10">
+                        <div class="col-md-3">
+                            <label class="text-bold">Task level :</label>
+                        </div>
+                        <div class="col-md-5">
+                            <input type="text" placeholder="int please!" class="form-control" ng-model="item.TaskLevel" />
+                        </div>
+                        <div class="col-md-4">
+                        </div>
+                    </div>
+                    <div class="col-md-12 no-padding float-left margin-top-10">
+                        <div class="col-md-3">
+                            <label class="text-bold">Task content :</label>
+                        </div>
+                        <div class="col-md-5">
+                            <input type="text" placeholder="required" class="form-control" ng-model="item.TaskContent" />
+                        </div>
+                        <div class="col-md-4">
+                            <span></span>
+                        </div>
+                    </div>
+                    <div class="col-md-12 no-padding float-left margin-top-10">
+                        <div class="col-md-3">
+                            <label class="text-bold">Task reward :</label>
+                        </div>
+                        <div class="col-md-5">
+                            <input type="text" placeholder="int please!" class="form-control" ng-model="item.TaskReworkMoney" />
+                        </div>
+                        <div class="col-md-4">
+                            <span></span>
+                        </div>
+                    </div>
+                    <div class="col-md-12 no-padding float-left margin-top-10">
+                        <div class="col-md-3">
+                            <label class="text-bold">Task reward other :</label>
+                        </div>
+                        <div class="col-md-5">
+                            <input type="text" placeholder="required" class="form-control" ng-model="item.TaskRewordOther" />
+                        </div>
+                        <div class="col-md-4">
+                            <span></span>
+                        </div>
+                    </div>
+                    <div class="col-md-12 no-padding float-left margin-top-10">
+                        <div class="col-md-3">
+                            <label class="text-bold">Time :</label>
+                        </div>
+                        <div class="col-md-5">
+                            <input type="text" placeholder="int or float please !" class="form-control" ng-model="item.TimeToFinish" />
+                        </div>
+                        <div class="col-md-4">
+                            <span></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer float-left col-md-12">
+                    <button type="button"
+                            class="btn btn-success"
+                            ng-click="createNewTask(item)">
+                        Create
+                    </button>
+                    <button type="button"
+                            class="btn btn-default"
+                            data-dismiss="modal">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Alert popup -->
+    <div class="modal fade" id="myAlert" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">{{alertTitle}}</h4>
+                </div>
+                <div class="modal-body">
+                    {{alertContent}}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

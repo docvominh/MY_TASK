@@ -1,0 +1,321 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DB_SMART_DEVModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="T_TASK">
+          <Key>
+            <PropertyRef Name="TASK_ID" />
+          </Key>
+          <Property Name="TASK_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TASK_NAME" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="TASK_LEVEL" Type="tinyint" Nullable="false" />
+          <Property Name="TASK_CONTENT" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="TASK_REWARD_MONEY" Type="int" />
+          <Property Name="TASK_REWARD_OTHER" Type="nvarchar" MaxLength="500" />
+          <Property Name="VIEW_COUNT" Type="int" Nullable="false" />
+          <Property Name="TASK_STATUS" Type="tinyint" Nullable="false" />
+          <Property Name="TIME_TO_FINISH" Type="float" />
+          <Property Name="CREATE_DATE" Type="datetime" Nullable="false" />
+          <Property Name="CREATE_USER_ID" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="CREATE_USER_NAME" Type="nvarchar" MaxLength="50" />
+          <Property Name="OWN_USER_ID" Type="varchar" MaxLength="20" />
+          <Property Name="OWN_USER_NAME" Type="nvarchar" MaxLength="50" />
+          <Property Name="DELETE_FLAG" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_USER">
+          <Key>
+            <PropertyRef Name="USER_ID" />
+          </Key>
+          <Property Name="USER_ID" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="USER_NAME" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="USER_PASSWORD" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="USER_LEVEL" Type="smallint" Nullable="false" />
+          <Property Name="USER_ROLE" Type="tinyint" Nullable="false" />
+          <Property Name="BLOCK_FLAG" Type="bit" Nullable="false" />
+          <Property Name="DELETE_FLAG" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="T_USER_TASK">
+          <Key>
+            <PropertyRef Name="SQUENCE_ID" />
+          </Key>
+          <Property Name="SQUENCE_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="USER_TAKE_ID" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="TASK_ID" Type="int" Nullable="false" />
+          <Property Name="TASK_STATUS" Type="tinyint" Nullable="false" />
+          <Property Name="CREATE_USER_NAME" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CREATE_DATE" Type="datetime" Nullable="false" />
+          <Property Name="DELETE_FLAG" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_T_TASK_T_USER">
+          <End Role="T_USER" Type="Self.T_USER" Multiplicity="1" />
+          <End Role="T_TASK" Type="Self.T_TASK" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_USER">
+              <PropertyRef Name="USER_ID" />
+            </Principal>
+            <Dependent Role="T_TASK">
+              <PropertyRef Name="CREATE_USER_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_USER_TASK_T_TASK">
+          <End Role="T_TASK" Type="Self.T_TASK" Multiplicity="1" />
+          <End Role="T_USER_TASK" Type="Self.T_USER_TASK" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_TASK">
+              <PropertyRef Name="TASK_ID" />
+            </Principal>
+            <Dependent Role="T_USER_TASK">
+              <PropertyRef Name="TASK_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_USER_TASK_T_USER">
+          <End Role="T_USER" Type="Self.T_USER" Multiplicity="1" />
+          <End Role="T_USER_TASK" Type="Self.T_USER_TASK" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_USER">
+              <PropertyRef Name="USER_ID" />
+            </Principal>
+            <Dependent Role="T_USER_TASK">
+              <PropertyRef Name="USER_TAKE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DB_SMART_DEVModelStoreContainer">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_TASK" EntityType="Self.T_TASK" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_USER" EntityType="Self.T_USER" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="T_USER_TASK" EntityType="Self.T_USER_TASK" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_T_TASK_T_USER" Association="Self.FK_T_TASK_T_USER">
+            <End Role="T_USER" EntitySet="T_USER" />
+            <End Role="T_TASK" EntitySet="T_TASK" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_USER_TASK_T_TASK" Association="Self.FK_T_USER_TASK_T_TASK">
+            <End Role="T_TASK" EntitySet="T_TASK" />
+            <End Role="T_USER_TASK" EntitySet="T_USER_TASK" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_USER_TASK_T_USER" Association="Self.FK_T_USER_TASK_T_USER">
+            <End Role="T_USER" EntitySet="T_USER" />
+            <End Role="T_USER_TASK" EntitySet="T_USER_TASK" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DB_SMART_DEVModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="T_TASK">
+          <Key>
+            <PropertyRef Name="TASK_ID" />
+          </Key>
+          <Property Name="TASK_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TASK_NAME" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TASK_LEVEL" Type="Byte" Nullable="false" />
+          <Property Name="TASK_CONTENT" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TASK_REWARD_MONEY" Type="Int32" />
+          <Property Name="TASK_REWARD_OTHER" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="VIEW_COUNT" Type="Int32" Nullable="false" />
+          <Property Name="TASK_STATUS" Type="Byte" Nullable="false" />
+          <Property Name="TIME_TO_FINISH" Type="Double" />
+          <Property Name="CREATE_DATE" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CREATE_USER_ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DELETE_FLAG" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="T_USER" Relationship="Self.FK_T_TASK_T_USER" FromRole="T_TASK" ToRole="T_USER" />
+          <NavigationProperty Name="T_USER_TASK" Relationship="Self.FK_T_USER_TASK_T_TASK" FromRole="T_TASK" ToRole="T_USER_TASK" />
+          <Property Name="CREATE_USER_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OWN_USER_ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="OWN_USER_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="T_USER">
+          <Key>
+            <PropertyRef Name="USER_ID" />
+          </Key>
+          <Property Name="USER_ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="USER_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="USER_PASSWORD" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="USER_LEVEL" Type="Int16" Nullable="false" />
+          <Property Name="USER_ROLE" Type="Byte" Nullable="false" />
+          <Property Name="BLOCK_FLAG" Type="Boolean" Nullable="false" />
+          <Property Name="DELETE_FLAG" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="T_TASK" Relationship="Self.FK_T_TASK_T_USER" FromRole="T_USER" ToRole="T_TASK" />
+          <NavigationProperty Name="T_USER_TASK" Relationship="Self.FK_T_USER_TASK_T_USER" FromRole="T_USER" ToRole="T_USER_TASK" />
+        </EntityType>
+        <EntityType Name="T_USER_TASK">
+          <Key>
+            <PropertyRef Name="SQUENCE_ID" />
+          </Key>
+          <Property Name="SQUENCE_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="USER_TAKE_ID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TASK_ID" Type="Int32" Nullable="false" />
+          <Property Name="TASK_STATUS" Type="Byte" Nullable="false" />
+          <Property Name="CREATE_USER_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CREATE_DATE" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DELETE_FLAG" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="T_TASK" Relationship="Self.FK_T_USER_TASK_T_TASK" FromRole="T_USER_TASK" ToRole="T_TASK" />
+          <NavigationProperty Name="T_USER" Relationship="Self.FK_T_USER_TASK_T_USER" FromRole="T_USER_TASK" ToRole="T_USER" />
+        </EntityType>
+        <Association Name="FK_T_TASK_T_USER">
+          <End Role="T_USER" Type="Self.T_USER" Multiplicity="1" />
+          <End Role="T_TASK" Type="Self.T_TASK" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_USER">
+              <PropertyRef Name="USER_ID" />
+            </Principal>
+            <Dependent Role="T_TASK">
+              <PropertyRef Name="CREATE_USER_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_USER_TASK_T_TASK">
+          <End Role="T_TASK" Type="Self.T_TASK" Multiplicity="1" />
+          <End Role="T_USER_TASK" Type="Self.T_USER_TASK" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_TASK">
+              <PropertyRef Name="TASK_ID" />
+            </Principal>
+            <Dependent Role="T_USER_TASK">
+              <PropertyRef Name="TASK_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_T_USER_TASK_T_USER">
+          <End Role="T_USER" Type="Self.T_USER" Multiplicity="1" />
+          <End Role="T_USER_TASK" Type="Self.T_USER_TASK" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="T_USER">
+              <PropertyRef Name="USER_ID" />
+            </Principal>
+            <Dependent Role="T_USER_TASK">
+              <PropertyRef Name="USER_TAKE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DB_SMART_DEVEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="T_TASK" EntityType="Self.T_TASK" />
+          <EntitySet Name="T_USER" EntityType="Self.T_USER" />
+          <EntitySet Name="T_USER_TASK" EntityType="Self.T_USER_TASK" />
+          <AssociationSet Name="FK_T_TASK_T_USER" Association="Self.FK_T_TASK_T_USER">
+            <End Role="T_USER" EntitySet="T_USER" />
+            <End Role="T_TASK" EntitySet="T_TASK" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_USER_TASK_T_TASK" Association="Self.FK_T_USER_TASK_T_TASK">
+            <End Role="T_TASK" EntitySet="T_TASK" />
+            <End Role="T_USER_TASK" EntitySet="T_USER_TASK" />
+          </AssociationSet>
+          <AssociationSet Name="FK_T_USER_TASK_T_USER" Association="Self.FK_T_USER_TASK_T_USER">
+            <End Role="T_USER" EntitySet="T_USER" />
+            <End Role="T_USER_TASK" EntitySet="T_USER_TASK" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DB_SMART_DEVModelStoreContainer" CdmEntityContainer="DB_SMART_DEVEntities">
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="DB_SMART_DEVModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_TASK">
+            <EntityTypeMapping TypeName="DB_SMART_DEVModel.T_TASK">
+              <MappingFragment StoreEntitySet="T_TASK">
+                <ScalarProperty Name="OWN_USER_NAME" ColumnName="OWN_USER_NAME" />
+                <ScalarProperty Name="OWN_USER_ID" ColumnName="OWN_USER_ID" />
+                <ScalarProperty Name="CREATE_USER_NAME" ColumnName="CREATE_USER_NAME" />
+                <ScalarProperty Name="TASK_ID" ColumnName="TASK_ID" />
+                <ScalarProperty Name="TASK_NAME" ColumnName="TASK_NAME" />
+                <ScalarProperty Name="TASK_LEVEL" ColumnName="TASK_LEVEL" />
+                <ScalarProperty Name="TASK_CONTENT" ColumnName="TASK_CONTENT" />
+                <ScalarProperty Name="TASK_REWARD_MONEY" ColumnName="TASK_REWARD_MONEY" />
+                <ScalarProperty Name="TASK_REWARD_OTHER" ColumnName="TASK_REWARD_OTHER" />
+                <ScalarProperty Name="VIEW_COUNT" ColumnName="VIEW_COUNT" />
+                <ScalarProperty Name="TASK_STATUS" ColumnName="TASK_STATUS" />
+                <ScalarProperty Name="TIME_TO_FINISH" ColumnName="TIME_TO_FINISH" />
+                <ScalarProperty Name="CREATE_DATE" ColumnName="CREATE_DATE" />
+                <ScalarProperty Name="CREATE_USER_ID" ColumnName="CREATE_USER_ID" />
+                <ScalarProperty Name="DELETE_FLAG" ColumnName="DELETE_FLAG" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_USER">
+            <EntityTypeMapping TypeName="DB_SMART_DEVModel.T_USER">
+              <MappingFragment StoreEntitySet="T_USER">
+                <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+                <ScalarProperty Name="USER_NAME" ColumnName="USER_NAME" />
+                <ScalarProperty Name="USER_PASSWORD" ColumnName="USER_PASSWORD" />
+                <ScalarProperty Name="USER_LEVEL" ColumnName="USER_LEVEL" />
+                <ScalarProperty Name="USER_ROLE" ColumnName="USER_ROLE" />
+                <ScalarProperty Name="BLOCK_FLAG" ColumnName="BLOCK_FLAG" />
+                <ScalarProperty Name="DELETE_FLAG" ColumnName="DELETE_FLAG" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="T_USER_TASK">
+            <EntityTypeMapping TypeName="DB_SMART_DEVModel.T_USER_TASK">
+              <MappingFragment StoreEntitySet="T_USER_TASK">
+                <ScalarProperty Name="SQUENCE_ID" ColumnName="SQUENCE_ID" />
+                <ScalarProperty Name="USER_TAKE_ID" ColumnName="USER_TAKE_ID" />
+                <ScalarProperty Name="TASK_ID" ColumnName="TASK_ID" />
+                <ScalarProperty Name="TASK_STATUS" ColumnName="TASK_STATUS" />
+                <ScalarProperty Name="CREATE_USER_NAME" ColumnName="CREATE_USER_NAME" />
+                <ScalarProperty Name="CREATE_DATE" ColumnName="CREATE_DATE" />
+                <ScalarProperty Name="DELETE_FLAG" ColumnName="DELETE_FLAG" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
